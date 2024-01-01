@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Gender {
+  male
+  female
+  others
+}
+
+model Account {
+  id             Int       @id @default(autoincrement())
+  name           String    @unique
+  firstName      String?
+  lastName       String?
+  email          String    @unique
+  birthDate      DateTime?
+  password       String?
+  contactNo      String?   @unique
+  gender         Gender
+  secondaryEmail String?
+  location       String?
+  about          String?   @db.VarChar(250)
+  isActive       Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  Members        Member[]  @relation("account_member")
+  MemberCreators Member[]  @relation("approvedByMember")
+  Companies      Company[] @relation("companyCreators")
+}
+
+model Member {
+  id           Int      @id @default(autoincrement())
+  account      Account  @relation("account_member", fields: [accountId], references: [id])
+  accountId    Int      @map("account")
+  company      Company  @relation("member_company", fields: [companyId], references: [id])
+  companyId    Int      @map("company")
+  isApproved   Boolean  @default(true)
+  approvedBy   Account? @relation("approvedByMember", fields: [approvedById], references: [id])
+  approvedById Int?     @map("approvedBy")
+  createdAt    DateTime @default(now()) @db.Timestamp(6)
+  updatedAt    DateTime @updatedAt @db.Timestamp(6)
+  // companyRole    CompanyRole   @relation(fields: [companyRoleId], references: [id])
+  // companyRoleId  Int           @map("companyRole")
+  // designations   Designation[] @relation("MemberToDesignation")
+}
+
+model Company {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique @db.VarChar(32)
+  type        String?  @db.VarChar(255)
+  address     String?  @db.VarChar(120)
+  about       String?  @db.VarChar(2000)
+  email       String?  @unique @db.VarChar(255)
+  createdBy   Account  @relation("companyCreators", fields: [createdById], references: [id])
+  createdById Int      @map("account")
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime @updatedAt @db.Timestamp(6)
+  Member      Member[] @relation("member_company")
+}
