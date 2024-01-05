@@ -7,6 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ===================================Schemas start from here=======================================
 enum Gender {
   male
   female
@@ -16,15 +17,15 @@ enum Gender {
 model Account {
   id             Int       @id @default(autoincrement())
   name           String    @unique
-  firstName      String?
-  lastName       String?
+  firstName      String    @db.VarChar(50)
+  lastName       String    @db.VarChar(50)
   email          String    @unique
-  birthDate      DateTime?
-  password       String?
+  birthDate      DateTime
+  password       String
   contactNo      String?   @unique
   gender         Gender
   secondaryEmail String?
-  location       String?
+  location       String?   @db.VarChar(150)
   about          String?   @db.VarChar(250)
   isActive       Boolean   @default(true)
   createdAt      DateTime  @default(now())
@@ -35,16 +36,16 @@ model Account {
 }
 
 model Member {
-  id           Int      @id @default(autoincrement())
-  account      Account  @relation("account_member", fields: [accountId], references: [id])
-  accountId    Int      @map("account")
-  company      Company  @relation("member_company", fields: [companyId], references: [id])
-  companyId    Int      @map("company")
-  isApproved   Boolean  @default(true)
-  approvedBy   Account? @relation("approvedByMember", fields: [approvedById], references: [id])
-  approvedById Int?     @map("approvedBy")
-  createdAt    DateTime @default(now()) @db.Timestamp(6)
-  updatedAt    DateTime @updatedAt @db.Timestamp(6)
+  id          Int      @id @default(autoincrement())
+  account     Account  @relation("account_member", fields: [accountId], references: [id])
+  accountId   Int      @map("account")
+  company     Company  @relation("member_company", fields: [companyId], references: [id])
+  companyId   Int      @map("company")
+  isApproved  Boolean  @default(true)
+  createdBy   Account  @relation("approvedByMember", fields: [createdById], references: [id])
+  createdById Int      @map("approvedBy")
+  createdAt   DateTime @default(now()) @db.Timestamp(6)
+  updatedAt   DateTime @updatedAt @db.Timestamp(6)
   // companyRole    CompanyRole   @relation(fields: [companyRoleId], references: [id])
   // companyRoleId  Int           @map("companyRole")
   // designations   Designation[] @relation("MemberToDesignation")
