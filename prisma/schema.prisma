@@ -8,7 +8,7 @@ datasource db {
 }
 
 // ===================================Schemas start from here=======================================
-enum Gender {
+enum gender {
   male
   female
   others
@@ -23,7 +23,7 @@ model Account {
   birthDate      DateTime
   password       String
   contactNo      String?   @unique
-  gender         Gender
+  gender         gender
   secondaryEmail String?
   location       String?   @db.VarChar(150)
   about          String?   @db.VarChar(250)

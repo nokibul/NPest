@@ -2,11 +2,12 @@ import { ApiProperty } from '@nestjs/swagger';
 
 // signup dto
 enum Gender {
-  Male = 'Male',
-  Female = 'Female',
-  Other = 'Other',
+  male = 'male',
+  female = 'female',
+  others = 'others',
 }
-export class SignupDto {
+export class AccountDTO {
+  readonly name: string;
   @ApiProperty()
   readonly firstName: string;
   @ApiProperty()
@@ -18,17 +19,24 @@ export class SignupDto {
   @ApiProperty()
   readonly password: string;
   @ApiProperty()
-  readonly contactNo: string;
+  readonly contactNo: string | null;
   @ApiProperty()
   readonly gender: Gender;
   @ApiProperty()
-  readonly secondaryEmail: string;
+  readonly secondaryEmail?: string;
   @ApiProperty()
-  readonly location: string;
+  readonly location?: string;
   @ApiProperty()
-  readonly about: string;
+  readonly about?: string;
   @ApiProperty()
-  readonly isActive: boolean;
+  readonly isActive?: boolean;
+}
+
+export class LoginDto {
+  @ApiProperty()
+  readonly email: string;
+  @ApiProperty()
+  readonly password: string;
 }
 
 export type registeredUser = {

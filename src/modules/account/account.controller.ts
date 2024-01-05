@@ -1,9 +1,9 @@
 import { Body, Controller, Post, UsePipes } from '@nestjs/common';
-import { AuthenticationService } from './account.service';
 import { ZodValidationPipe } from 'src/zod/zod.pipe';
 import { ApiBody } from '@nestjs/swagger';
 import Validation from './account.validation';
-import { SignupDto } from './account.dto';
+import { LoginDto, AccountDTO } from './account.dto';
+import { AuthenticationService } from '../auth/auth.service';
 
 @Controller('auth')
 export class AccountController {
@@ -11,8 +11,8 @@ export class AccountController {
 
   @Post('/signup')
   @UsePipes(new ZodValidationPipe(Validation.signup))
-  @ApiBody({ type: SignupDto })
-  signup(@Body() signupData: SignupDto): any {
+  @ApiBody({ type: AccountDTO })
+  signup(@Body() signupData: AccountDTO): any {
     try {
       return this._authenticationService.signup(signupData);
     } catch (error) {
@@ -21,7 +21,14 @@ export class AccountController {
   }
 
   @Post('/login')
-  login(): string {
-    return this._authenticationService.login();
+  async login(@Body() loginDto: LoginDto): Promise<any> {
+    try {
+      return await this._authenticationService.login(loginDto);
+    } catch (error) {
+      return {
+        message: 'Error while login',
+        statusCode: 400,
+      };
+    }
   }
 }

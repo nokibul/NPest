@@ -6,6 +6,7 @@ import {
 } from '@nestjs/platform-fastify';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { DatabaseExceptionFilter } from './shared/filters/exception.db';
+import { HttpExceptionFilter } from './shared/filters/exception.http';
 // import { HttpExceptionFilter } from './filters/exception.http';
 
 async function bootstrap() {
@@ -23,6 +24,7 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.useGlobalFilters(new DatabaseExceptionFilter());
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   await app.listen(3000);
 }

@@ -1,17 +1,12 @@
-import {
-  // ConflictException,
-  Injectable,
-  // InternalServerErrorException,
-} from '@nestjs/common';
-// import { SignupRequestDto } from './account.dto';
+import { Injectable } from '@nestjs/common';
 import Prisma from 'prisma/client.prisma';
-import { registeredUser } from './account.dto';
+import { AccountDTO } from './account.dto';
 @Injectable()
-export class AuthenticationRepository {
-  async signup(signupRequestDto: any): Promise<registeredUser> {
+export class AccountRepository {
+  async create(signupDto: AccountDTO): Promise<any> {
     try {
-      const user: registeredUser = await Prisma.account.create({
-        data: signupRequestDto,
+      const user = await Prisma.account.create({
+        data: signupDto,
       });
       return user;
     } catch (error) {
@@ -19,7 +14,8 @@ export class AuthenticationRepository {
     }
   }
 
-  login(): string {
-    return 'Hurrah! You are now logged in';
+  async findByEmail(email: string): Promise<any> {
+    const user = Prisma.account.findFirst({ where: { email } });
+    return user;
   }
 }
