@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AccountModule } from '../account/account.module';
-import { JwtModule } from '@nestjs/jwt';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { MailModule } from 'src/shared/mail/mailer.module';
+import { MailService } from 'src/shared/mail/mailer.service';
+import { AccountRepository } from '../account/account.repository';
 
 @Module({
   imports: [
@@ -15,6 +17,7 @@ import { MailModule } from 'src/shared/mail/mailer.module';
     AccountModule,
   ],
   controllers: [],
-  // providers: [],
+  providers: [MailService, JwtService, AccountRepository],
+  exports: [MailService],
 })
 export class AuthModule {}

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import Prisma from 'prisma/client.prisma';
 import { AccountDTO } from './account.dto';
+
 @Injectable()
 export class AccountRepository {
   async create(signupDto: AccountDTO): Promise<any> {
@@ -15,7 +16,7 @@ export class AccountRepository {
   }
 
   async findByEmail(email: string): Promise<any> {
-    const user = Prisma.account.findFirst({ where: { email } });
+    const user = await Prisma.account.findFirst({ where: { email } });
     return user;
   }
 }

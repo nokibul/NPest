@@ -1,4 +1,11 @@
-import { Body, Controller, Post, UsePipes } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Inject,
+  Post,
+  UsePipes,
+  forwardRef,
+} from '@nestjs/common';
 import { ZodValidationPipe } from 'src/zod/zod.pipe';
 import { ApiBody } from '@nestjs/swagger';
 import Validation from './account.validation';
@@ -7,7 +14,10 @@ import { AuthenticationService } from '../auth/auth.service';
 
 @Controller('auth')
 export class AccountController {
-  constructor(private readonly _authenticationService: AuthenticationService) {}
+  constructor(
+    @Inject(forwardRef(() => AuthenticationService))
+    private readonly _authenticationService: AuthenticationService
+  ) {}
 
   @Post('/signup')
   @UsePipes(new ZodValidationPipe(Validation.signup))

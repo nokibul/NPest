@@ -31,5 +31,6 @@ import { MailService } from './mailer.service';
   ],
   controllers: [],
   providers: [MailService],
+  exports: [MailService],
 })
 export class MailModule {}

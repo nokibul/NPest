@@ -1,7 +1,9 @@
 import {
+  Inject,
   Injectable,
   NotFoundException,
   UnauthorizedException,
+  forwardRef,
 } from '@nestjs/common';
 import { AccountRepository } from '../account/account.repository';
 import { createFullName } from 'src/shared/utils/string.util';
@@ -14,8 +16,9 @@ import { JwtService } from '@nestjs/jwt';
 export class AuthenticationService {
   constructor(
     private readonly _mailService: MailService,
-    private readonly _accountRepository: AccountRepository,
-    private readonly _jwtService: JwtService
+    private readonly _jwtService: JwtService,
+    @Inject(forwardRef(() => AccountRepository))
+    private readonly _accountRepository: AccountRepository
   ) {}
 
   private async validateUser(email: string, password: string) {
@@ -23,13 +26,14 @@ export class AuthenticationService {
     if (!user) {
       throw new NotFoundException('Account not found');
     }
-    return this.comparePasswords(password, user.password);
+
+    return await this.comparePasswords(password, user.password);
   }
 
   private async hashPassword(password: string): Promise<string> {
     const saltRounds = 10;
-
     const hashedPassword = await bcrypt.hash(password, saltRounds);
+
     return hashedPassword;
   }
 
