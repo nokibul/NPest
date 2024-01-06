@@ -1,13 +1,14 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { AccountModule } from './account/account.module';
-import { MemberModule } from './member/member.module';
-import { CompanyModule } from './company/company.module';
+// import { AppController } from './app.controller';
+// import { AppService } from './app.service';
+// import { AuthGuard } from './modules/auth/auth.guard';
+import { AuthModule } from './modules/auth/auth.module';
+import { AccountModule } from './modules/account/account.module';
+import { MailModule } from './shared/mail/mailer.module';
 
 @Module({
-  imports: [AccountModule, MemberModule, CompanyModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [AuthModule, AccountModule, MailModule],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
