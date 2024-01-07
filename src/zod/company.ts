@@ -8,6 +8,4 @@ export const CompanyModel = z.object({
   about: z.string().nullish(),
   email: z.string().nullish(),
   createdById: z.number().int(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
 });

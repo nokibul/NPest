@@ -1,9 +1,9 @@
 import * as z from 'zod';
 
 enum genderEnum {
-  male = "male",
-  female = "female",
-  others = "others",
+  male = 'male',
+  female = 'female',
+  others = 'others',
 }
 
 const signup = z.object({

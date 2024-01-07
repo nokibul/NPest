@@ -1,5 +1,5 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
-import { blue, bold, underline, red, green } from "colorette"
+import { blue, red, green } from 'colorette';
 
 @Injectable()
 export class LoggerService extends ConsoleLogger {

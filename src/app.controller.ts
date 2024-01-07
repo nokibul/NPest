@@ -1,7 +1,5 @@
-import { Controller, Get, Inject, UseGuards, forwardRef } from '@nestjs/common';
+import { Controller, Get, Inject, forwardRef } from '@nestjs/common';
 import { AppService } from './app.service';
-import { AuthGuard } from './modules/auth/auth.guard';
-import { ApiBasicAuth } from '@nestjs/swagger';
 
 @Controller()
 export class AppController {
@@ -10,8 +8,8 @@ export class AppController {
     private readonly appService: AppService
   ) {}
 
-  @ApiBasicAuth()
-  @UseGuards(AuthGuard)
+  // @ApiBearerAuth()
+  // @UseGuards(AuthGuard)
   @Get('protected-api')
   getHello(): string {
     return this.appService.getHello();

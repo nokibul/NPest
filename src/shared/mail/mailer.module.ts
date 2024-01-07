@@ -29,7 +29,7 @@ import { LoggerModule } from '../logger/logger.module';
         },
       },
     }),
-    LoggerModule
+    LoggerModule,
   ],
   controllers: [],
   providers: [MailService],
