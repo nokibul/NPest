@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { AccountModule } from '../account/account.module';
-import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { MailModule } from 'src/shared/mail/mailer.module';
-import { MailService } from 'src/shared/mail/mailer.service';
-import { AccountRepository } from '../account/account.repository';
+// import { AccountRepository } from '../account/account.repository';
+// import { LoggerService } from 'src/shared/logger/logger.service';
+import { LoggerModule } from 'src/shared/logger/logger.module';
+import { AuthenticationService } from './auth.service';
 
 @Module({
   imports: [
@@ -15,9 +17,10 @@ import { AccountRepository } from '../account/account.repository';
       signOptions: { expiresIn: '60000s' },
     }),
     AccountModule,
+    LoggerModule,
   ],
   controllers: [],
-  providers: [MailService, JwtService, AccountRepository],
-  exports: [MailService],
+  providers: [AuthenticationService],
+  exports: [AuthenticationService],
 })
 export class AuthModule {}
