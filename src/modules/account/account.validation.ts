@@ -1,6 +1,10 @@
 import * as z from 'zod';
 
-import { Gender } from '@prisma/client';
+enum genderEnum {
+  male = "male",
+  female = "female",
+  others = "others",
+}
 
 const signup = z.object({
   name: z.string().nullish(),
@@ -10,7 +14,7 @@ const signup = z.object({
   birthDate: z.string(),
   password: z.string(),
   contactNo: z.string().nullish(),
-  gender: z.nativeEnum(Gender),
+  gender: z.nativeEnum(genderEnum),
   secondaryEmail: z.string().nullish(),
   location: z.string().nullish(),
   about: z.string().nullish(),

@@ -11,6 +11,7 @@ import { MailService } from 'src/shared/mail/mailer.service';
 import * as bcrypt from 'bcrypt';
 import { AccountDTO, LoginDto } from '../account/account.dto';
 import { JwtService } from '@nestjs/jwt';
+import { LoggerService } from 'src/shared/logger/logger.service';
 
 @Injectable()
 export class AuthenticationService {
@@ -18,7 +19,8 @@ export class AuthenticationService {
     private readonly _mailService: MailService,
     private readonly _jwtService: JwtService,
     @Inject(forwardRef(() => AccountRepository))
-    private readonly _accountRepository: AccountRepository
+    private readonly _accountRepository: AccountRepository,
+    private readonly _logger: LoggerService
   ) {}
 
   private async validateUser(email: string, password: string) {
@@ -51,6 +53,7 @@ export class AuthenticationService {
       const fullName = createFullName(firstName, lastName);
       const hashedPassword = await this.hashPassword(password);
 
+      this._logger.log('Creating user');
       const user = await this._accountRepository.create({
         ...signupData,
         name: fullName,
