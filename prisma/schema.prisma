@@ -46,9 +46,6 @@ model CompanyMember {
   createdById Int      @map("approvedBy")
   createdAt   DateTime @default(now()) @db.Timestamp(6)
   updatedAt   DateTime @updatedAt @db.Timestamp(6)
-  // companyRole    CompanyRole   @relation(fields: [companyRoleId], references: [id])
-  // companyRoleId  Int           @map("companyRole")
-  // designations   Designation[] @relation("MemberToDesignation")
 }
 
 model Company {
