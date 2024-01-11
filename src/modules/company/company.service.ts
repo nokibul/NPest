@@ -9,7 +9,6 @@ export class CompanyService {
   async createCompany(createCompanyData: createCompanyReqDto): Promise<any> {
     try {
       const company = await this._companyRepository.create(createCompanyData);
-
       return company;
     } catch (error) {
       throw error;
