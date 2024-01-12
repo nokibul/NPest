@@ -36,6 +36,7 @@ export class CompanyController {
       this._logger.log('Company create controller');
       const createdCompany =
         await this._companyService.createCompany(createCompanyData);
+
       Response.sendResponse(res, {
         statusCode: 201,
         message: 'Company created successfully',

@@ -12,13 +12,12 @@ export class MemberService {
     createdById,
     isApproved,
   }: memberCreateData): Promise<any> {
-    await this._memberRepository.create({
+    const member = await this._memberRepository.create({
       accountId,
       companyId,
       createdById,
       isApproved,
     });
-
-    return 'Member added in company';
+    return member;
   }
 }

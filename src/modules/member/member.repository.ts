@@ -6,7 +6,6 @@ import { memberCreateData } from './member.dto';
 export class MemberRepository {
   async create(data: memberCreateData): Promise<any> {
     try {
-      console.log(data);
       const { accountId, createdById, companyId, isApproved } = data;
       const user = await Prisma.companyMember.create({
         data: {
