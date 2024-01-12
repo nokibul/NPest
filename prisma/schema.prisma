@@ -50,7 +50,7 @@ model CompanyMember {
 
 model Company {
   id          Int             @id @default(autoincrement())
-  name        String          @unique @db.VarChar(32)
+  name        String          @unique @db.Text()
   type        String?         @db.VarChar(255)
   address     String?         @db.VarChar(120)
   about       String?         @db.VarChar(2000)

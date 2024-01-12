@@ -3,6 +3,7 @@ import {
   Controller,
   Inject,
   Post,
+  Res,
   UsePipes,
   forwardRef,
 } from '@nestjs/common';
@@ -11,6 +12,8 @@ import { ApiBody } from '@nestjs/swagger';
 import Validation from './account.validation';
 import { LoginDto, AccountDTO } from './account.dto';
 import { AuthenticationService } from '../auth/auth.service';
+import { Response } from 'src/shared/utils/response.util';
+import { FastifyReply } from 'fastify';
 
 @Controller('auth')
 export class AccountController {
@@ -22,11 +25,18 @@ export class AccountController {
   @Post('/signup')
   @UsePipes(new ZodValidationPipe(Validation.signup))
   @ApiBody({ type: AccountDTO })
-  signup(@Body() signupData: AccountDTO): any {
+  async signup(
+    @Res() res: FastifyReply,
+    @Body() signupData: AccountDTO
+  ): Promise<any> {
     try {
-      return this._authenticationService.signup(signupData);
+      await this._authenticationService.signup(signupData);
+      Response.sendResponse(res, {
+        statusCode: 201,
+        message: 'User created',
+      });
     } catch (error) {
-      throw error;
+      return Response.sendErrorResponse(res, error);
     }
   }
 

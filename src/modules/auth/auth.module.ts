@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AccountModule } from '../account/account.module';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
+import { jwtConstants } from '../../shared/middleware/constants';
 import { MailModule } from 'src/shared/mail/mailer.module';
 // import { AccountRepository } from '../account/account.repository';
 // import { LoggerService } from 'src/shared/logger/logger.service';

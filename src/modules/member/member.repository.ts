@@ -1,22 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import Prisma from 'prisma/client.prisma';
-import { MemberCreateReqDto } from './member.dto';
+import { memberCreateData } from './member.dto';
 
 @Injectable()
 export class MemberRepository {
-  async create(createMemberData: MemberCreateReqDto): Promise<any> {
+  async create(data: memberCreateData): Promise<any> {
     try {
+      console.log(data);
+      const { accountId, createdById, companyId, isApproved } = data;
       const user = await Prisma.companyMember.create({
         data: {
           account: {
-            connect: { id: 1 }, // Replace with the actual accountId
+            connect: { id: accountId },
           },
           company: {
-            connect: { id: 1 }, // Replace with the actual companyId
+            connect: { id: companyId },
           },
-          isApproved: true,
+          isApproved: isApproved,
           createdBy: {
-            connect: { id: 2 }, // Replace with the actual createdById
+            connect: { id: createdById },
           },
         },
       });

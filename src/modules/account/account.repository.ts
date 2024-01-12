@@ -5,14 +5,14 @@ import { AccountDTO } from './account.dto';
 @Injectable()
 export class AccountRepository {
   async create(signupDto: AccountDTO): Promise<any> {
-    try {
-      const user = await Prisma.account.create({
-        data: signupDto,
-      });
-      return user;
-    } catch (error) {
-      throw error;
-    }
+    const user = await Prisma.account.create({
+      data: signupDto,
+      select: {
+        name: true,
+        email: true,
+      },
+    });
+    return user;
   }
 
   async findByEmail(email: string): Promise<any> {

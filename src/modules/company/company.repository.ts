@@ -1,18 +1,36 @@
 import { Injectable } from '@nestjs/common';
 import Prisma from 'prisma/client.prisma';
 import { createCompanyReqDto } from './company.dto';
-
+import { LoggerService } from 'src/shared/logger/logger.service';
+// import { PrismaService } from 'nestjs-prisma';
 @Injectable()
 export class CompanyRepository {
+  constructor(private readonly _logger: LoggerService) {}
+
   async create(createCompanyData: createCompanyReqDto): Promise<any> {
-    try {
-      const user = await Prisma.company.create({
-        data: createCompanyData,
-      });
-      return user;
-    } catch (error) {
-      throw error;
-    }
+    this._logger.log('Company create repository');
+    const { name, type, address, about, email, createdById } =
+      createCompanyData;
+    const newCompany = await Prisma.company.create({
+      data: {
+        name: name,
+        type: type,
+        address: address,
+        about: about,
+        email: email,
+        createdBy: {
+          connect: { id: createdById },
+        },
+      },
+      select: {
+        name: true,
+        createdBy: {
+          select: { name: true },
+        },
+      },
+    });
+
+    return newCompany;
   }
 
   async findByName(name: string): Promise<any> {

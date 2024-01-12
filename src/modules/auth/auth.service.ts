@@ -46,7 +46,7 @@ export class AuthenticationService {
     return bcrypt.compare(password, hashedPassword);
   }
 
-  async signup(signupData: AccountDTO): Promise<string> {
+  async signup(signupData: AccountDTO): Promise<any> {
     try {
       const { firstName, lastName, password } = signupData;
 
@@ -66,7 +66,7 @@ export class AuthenticationService {
         user.name
       );
 
-      return 'Hurrah! You are now registered';
+      return user;
     } catch (error) {
       throw error;
     }

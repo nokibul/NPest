@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  // HttpException,
   NotFoundException,
   Param,
   Post,
@@ -10,12 +11,12 @@ import {
 } from '@nestjs/common';
 import { CompanyService } from './company.service';
 import { createCompanyReqDto } from './company.dto';
-import { ErrorResponseUtil } from 'src/shared/utils/response.util';
 import { FastifyReply } from 'fastify';
 import { ZodValidationPipe } from 'src/zod/zod.pipe';
 import validation from './company.validation';
 import { CompanyRepository } from './company.repository';
 import { LoggerService } from 'src/shared/logger/logger.service';
+import { Response } from 'src/shared/utils/response.util';
 
 @Controller('companies')
 export class CompanyController {
@@ -30,15 +31,18 @@ export class CompanyController {
   async createCompany(
     @Res() res: FastifyReply,
     @Body() createCompanyData: createCompanyReqDto
-  ) {
+  ): Promise<any> {
     try {
-      await this._companyService.createCompany(createCompanyData);
+      this._logger.log('Company create controller');
+      const createdCompany =
+        await this._companyService.createCompany(createCompanyData);
+      Response.sendResponse(res, {
+        statusCode: 201,
+        message: 'Company created successfully',
+        data: createdCompany,
+      });
     } catch (error) {
-      return ErrorResponseUtil.sendErrorResponse(
-        res,
-        'Error while creating a company',
-        error.code
-      );
+      return Response.sendErrorResponse(res, error);
     }
   }
 
@@ -56,11 +60,7 @@ export class CompanyController {
       }
       return company;
     } catch (error) {
-      return ErrorResponseUtil.sendErrorResponse(
-        res,
-        error.message,
-        error.getStatus()
-      );
+      return Response.sendErrorResponse(res, error);
     }
   }
 }
