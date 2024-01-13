@@ -1,0 +1,27 @@
+# .dockerignore
+
+# Ignore node_modules, as we will install dependencies in the Dockerfile
+node_modules
+
+# Ignore development and test-related files
+*.log
+*.test.*
+*.spec.*
+
+# Ignore files related to version control systems
+.git
+.gitignore
+
+# Ignore ESLint cache and artifacts
+.eslintcache
+*.eslintcache
+
+# Ignore editor-related files
+.vscode
+.idea
+*.sublime-*
+
+# Ignore Docker-related files
+.dockerignore
+Dockerfile*
+docker-compose*

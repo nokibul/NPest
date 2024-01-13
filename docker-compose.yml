@@ -1,0 +1,24 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://postgres:nokib@localhost:5432/postgres
+    depends_on:
+      - database
+
+  database:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: nokib
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - "A:/Program Files/PostgreSQL/15/data:/var/lib/postgresql/data"
