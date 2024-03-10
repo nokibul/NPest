@@ -30,10 +30,11 @@ export class AccountController {
     @Body() signupData: AccountDTO
   ): Promise<any> {
     try {
-      await this._authenticationService.signup(signupData);
+      const user = await this._authenticationService.signup(signupData);
       Response.sendResponse(res, {
         statusCode: 201,
         message: 'User created',
+        data: user
       });
     } catch (error) {
       return Response.sendErrorResponse(res, error);

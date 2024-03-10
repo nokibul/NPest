@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import Prisma from 'prisma/client.prisma';
 import { AccountDTO } from './account.dto';
+import Prisma from '../../../prisma/client.prisma';
 
 @Injectable()
 export class AccountRepository {

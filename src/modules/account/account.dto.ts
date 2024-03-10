@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 // signup dto
-enum Gender {
+export enum Gender {
   male = 'male',
   female = 'female',
   others = 'others',
