@@ -12,7 +12,7 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_USER: postgres
+          POSTGRES_USER: localhost
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: db
 
@@ -23,7 +23,6 @@ jobs:
           --health-retries 5
         ports:
           - 5432:5432
-        
 
     steps:
       - name: Checkout code
