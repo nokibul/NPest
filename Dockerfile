@@ -10,6 +10,8 @@ RUN npm install -g pnpm
 
 RUN pnpm install
 
+RUN npx prisma generate
+
 COPY . .
 
 EXPOSE 3000

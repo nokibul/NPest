@@ -21,4 +21,4 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - "A:/Program Files/PostgreSQL/15/data:/var/lib/postgresql/data"
+      - "C:/Program Files/PostgreSQL/15/data:/var/lib/postgresql/data"
