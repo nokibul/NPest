@@ -36,5 +36,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: migration prisma db
+        run: npx prisma migrate dev --name init
+
       - name: Run tests
         run: npm test
