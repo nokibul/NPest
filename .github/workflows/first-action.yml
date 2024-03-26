@@ -12,9 +12,7 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_USER: my_database
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/db
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
