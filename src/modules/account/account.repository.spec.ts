@@ -61,7 +61,20 @@ describe('AccountRepository', () => {
     it('should find an account by email', async () => {
       // Arrange
       const email = 'stringdf2@gmail.com';
-
+      const signupDto: AccountDTO = {
+        name: generateRandomEmail(),
+        firstName: 'John',
+        lastName: 'Doe',
+        email: email,
+        birthDate: new Date('1990-01-01'),
+        password: 'securePassword123',
+        contactNo: generateRandomEmail(),
+        gender: Gender.male,
+        secondaryEmail: 'john.alt@example.com',
+        location: 'City, Country',
+        about: 'A brief description about John Doe',
+      };
+      await accountRepository.create(signupDto);
       // Act
       const findByEmailSpy = jest.spyOn(accountRepository, 'findByEmail');
       const result = await accountRepository.findByEmail(email);
