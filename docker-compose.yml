@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
       NODE_ENV: development
       DATABASE_URL: postgresql://postgres:nokib@localhost:5432/postgres
@@ -19,6 +19,6 @@ services:
       POSTGRES_PASSWORD: nokib
       POSTGRES_DB: postgres
     ports:
-      - "5432:5432"
-    volumes:
-      - "C:/Program Files/PostgreSQL/15/data:/var/lib/postgresql/data"
+      - '5432:5432'
+    # volumes:
+    #   - 'C:/Program Files/PostgreSQL/16/data:/var/lib/postgresql/data'

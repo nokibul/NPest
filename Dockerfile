@@ -4,15 +4,15 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm install --save-dev @nestjs/cli
+# RUN npm install --save-dev @nestjs/cli
 
 RUN npm install -g pnpm
 
 RUN pnpm install
 
-RUN npx prisma generate
-
 COPY . .
+
+RUN npx prisma generate
 
 EXPOSE 3000
 
