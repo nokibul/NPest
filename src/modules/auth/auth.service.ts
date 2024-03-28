@@ -68,6 +68,7 @@ export class AuthenticationService {
 
       return user;
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }

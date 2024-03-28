@@ -8,12 +8,14 @@ services:
       - '3000:3000'
     environment:
       NODE_ENV: development
-      DATABASE_URL: postgresql://postgres:nokib@localhost:5432/postgres
+      DATABASE_URL: postgresql://postgres:nokib@database:5432/postgres?schema=public
+    volumes:
+      - './src:/usr/src/app/src'
     depends_on:
       - database
 
   database:
-    image: postgres:latest
+    image: postgres:16
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: nokib
