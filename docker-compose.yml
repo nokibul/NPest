@@ -22,5 +22,3 @@ services:
       POSTGRES_DB: postgres
     ports:
       - '5432:5432'
-    # volumes:
-    #   - 'C:/Program Files/PostgreSQL/16/data:/var/lib/postgresql/data'
