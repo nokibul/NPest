@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: npest-deployment
+  labels:
+    app: npest
+spec:
+  selector:
+    matchLabels:
+      app: npest
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: npest
+    spec:
+      containers:
+      - name: npest-application
+        image: nokibnur/npest-app:1.0.3
+        ports:
+        - containerPort: 3000
+          # hostPort: 80
+        resources:
+          limits:
+            cpu: "1"
+            memory: "1Gi"
+          requests:
+            cpu: "0.5"
+            memory: "500Mi"
