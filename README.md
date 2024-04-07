@@ -1,3 +1,5 @@
+##A good headstart for nestjs with prisma. I have kubernetized it. Working on to add message queues.
+
 
 ## Installation
 
